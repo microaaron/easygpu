@@ -1,0 +1,39 @@
+{
+  "name": "easygpu",
+  "version": "0.0.1 alpha",
+  "description": "",
+  "main": "",
+  "directories": {
+    "doc": "doc",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node ./build/src-builder.js",
+    "lint": "eslint \"src/**/*.js\"",
+    "lint-fix": "eslint --fix \"src/**/*.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/microaaron/easygpu.git"
+  },
+  "keywords": [
+    "webgpu",
+    "html",
+    "javascript"
+  ],
+  "author": "microaaron",
+  "license": "(MIT)",
+  "bugs": {
+    "url": "https://github.com/microaaron/easygpu/issues"
+  },
+  "homepage": "https://github.com/microaaron/easygpu#readme",
+  "devDependencies": {
+    "concat": "^3.0.0",
+    "eslint": "^8.56.0",
+    "fs-extra": "^11.1.1",
+    "terser": "^4.3.8",
+    "zip-lib": "^0.7.3"
+  }
+}
