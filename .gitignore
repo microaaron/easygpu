@@ -1,0 +1,17 @@
+./.github/workflows/static.yml
+.travis.yml
+.idea
+_site
+.DS_Store
+test/my-tests
+*.tmproj
+*.bak
+*.pyc
+*.db
+version.js
+dist
+test/qunit
+tools/config/Data
+*~backup~
+node_modules
+package-lock.json
