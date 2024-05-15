@@ -7,6 +7,12 @@ var easygpu = {
     webgpu : {},
     wgsl   : {}
 };
+easygpu.about = {
+    version  : "__EASYGPU_VERSION__",
+    build    : "__EASYGPU_BUILD__",
+    revision : "__EASYGPU_REVISION__",
+    date     : "__EASYGPU_DATE__"
+};
 easygpu.BindingListArray = class BindingListArray extends Array
 {
     addBindingList ( bindingList )

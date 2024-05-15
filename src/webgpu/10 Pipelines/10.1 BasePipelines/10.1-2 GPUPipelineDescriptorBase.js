@@ -8,7 +8,7 @@ easygpu.webgpu.GPUPipelineDescriptorBase = class GPUPipelineDescriptorBase exten
     constructor ( layout = "auto", label )
     {
         super( label );
-        this.layout = layout;
+        this.layout = layout;//Required (GPUPipelineLayout or GPUAutoLayoutMode)
     }
 
     setLayout ( layout )

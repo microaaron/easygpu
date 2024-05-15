@@ -70,10 +70,10 @@ async function concatVersions()
         {
             version[ packageName ] = await concat( scripts );
 
-            version[ packageName ] = version[ packageName ].replace( "__EasyGPU_VERSION__", VERSION );
-            version[ packageName ] = version[ packageName ].replace( "__EasyGPU_BUILD__", BUILD );
-            version[ packageName ] = version[ packageName ].replace( "__EasyGPU_REVISION__", REVISION );
-            version[ packageName ] = version[ packageName ].replace( "__EasyGPU_DATE__", DATE );
+            version[ packageName ] = version[ packageName ].replace( "__EASYGPU_VERSION__", VERSION );
+            version[ packageName ] = version[ packageName ].replace( "__EASYGPU_BUILD__", BUILD );
+            version[ packageName ] = version[ packageName ].replace( "__EASYGPU_REVISION__", REVISION );
+            version[ packageName ] = version[ packageName ].replace( "__EASYGPU_DATE__", DATE );
         }
 
         lastPackageName = packageName;

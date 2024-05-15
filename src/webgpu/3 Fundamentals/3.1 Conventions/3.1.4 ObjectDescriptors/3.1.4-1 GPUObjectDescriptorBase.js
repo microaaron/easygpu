@@ -14,4 +14,9 @@ easygpu.webgpu.GPUObjectDescriptorBase = class GPUObjectDescriptorBase
     {
         this.label = label;
     }
+
+    get [ Symbol.toStringTag ] ()
+    {
+        return "GPUObjectDescriptorBase";
+    }
 };
