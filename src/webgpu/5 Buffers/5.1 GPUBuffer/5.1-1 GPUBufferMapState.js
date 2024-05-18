@@ -8,6 +8,7 @@ easygpu.webgpu.GPUBufferMapState = class GPUBufferMapState
     unmapped = "unmapped";
 
     pending = "pending";
+
     mapped = "mapped";
 
     constructor ()

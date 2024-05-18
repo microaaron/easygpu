@@ -1,9 +1,9 @@
 /**
- * @file GPUDeviceLostReason.js
+ * @file GPUErrorFilter.js
  * @author microaaron(github.com/microaaron)
  * @date 2024.05
  */
-easygpu.webgpu.GPUDeviceLostReason = class GPUDeviceLostReason
+easygpu.webgpu.GPUErrorFilter = class GPUErrorFilter
 {
     validation = "validation";
 
@@ -18,6 +18,6 @@ easygpu.webgpu.GPUDeviceLostReason = class GPUDeviceLostReason
 
     get [ Symbol.toStringTag ] ()
     {
-        return "GPUDeviceLostReason";
+        return "GPUErrorFilter";
     }
 };
