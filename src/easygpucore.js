@@ -381,18 +381,6 @@ easygpu.PassResource = class PassResource
                         size = undefined;
                         resource = new easygpu.webgpu.GPUBufferBinding( buffer, offset, size );
                     }
-                    /*else if ( bindingData.entry.sampler )
-                    {
-                        //do nothing
-                    }
-                    else if ( bindingData.entry.texture || bindingData.entry.storageTexture )
-                    {
-                        //do nothing
-                    }
-                    else if(bindingData.entry.externalTexture)
-                    {
-                        //do nothing
-                    }*/
                 }
                 const entry = easygpu.webgpu.GPUBindGroupDescriptor.newEntry( binding, resource );
                 this.entries[ binding ] = entry;
