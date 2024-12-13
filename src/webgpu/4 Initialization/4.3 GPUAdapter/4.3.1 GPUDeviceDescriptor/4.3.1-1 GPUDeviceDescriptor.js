@@ -8,7 +8,7 @@ easygpu.webgpu.GPUDeviceDescriptor = class GPUDeviceDescriptor
     constructor ( requiredFeatures = [], requiredLimits = {}, defaultQueue = {} )
     {
         this.requiredFeatures = requiredFeatures;//Optional; sequence<GPUFeatureName>; undefined = []
-        this.requiredLimits = requiredLimits;//Optional; record<DOMString, GPUSize64>; undefined = {}
+        this.requiredLimits = requiredLimits;//Optional; record<DOMString, GPUSize64 or undefined>; undefined = {}
         this.defaultQueue = defaultQueue;//Optional; GPUQueueDescriptor; undefined = {}
     }
 

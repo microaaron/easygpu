@@ -11,9 +11,13 @@ easygpu.webgpu.GPUFeatureName = class GPUFeatureName
 
     texture_compression_bc = "texture-compression-bc";
 
+    texture_compression_bc_sliced_3d = "texture-compression-bc-sliced-3d";
+
     texture_compression_etc2 = "texture-compression-etc2";
 
     texture_compression_astc = "texture-compression-astc";
+
+    texture_compression_astc_sliced_3d = "texture-compression-astc-sliced-3d";
 
     timestamp_query = "timestamp-query";
 
@@ -26,6 +30,12 @@ easygpu.webgpu.GPUFeatureName = class GPUFeatureName
     bgra8unorm_storage = "bgra8unorm-storage";
 
     float32_filterable = "float32-filterable";
+
+    float32_blendable = "float32-blendable";
+
+    clip_distances = "clip-distances";
+
+    dual_source_blending = "dual-source-blending";
 
     constructor ( device )
     {
@@ -41,6 +51,10 @@ easygpu.webgpu.GPUFeatureName = class GPUFeatureName
         {
             delete this.texture_compression_bc;
         }
+        if ( !device.features.has( "texture-compression-bc-sliced-3d" ) )
+        {
+            delete this.texture_compression_bc_sliced_3d;
+        }
         if ( !device.features.has( "texture-compression-etc2" ) )
         {
             delete this.texture_compression_etc2;
@@ -48,6 +62,10 @@ easygpu.webgpu.GPUFeatureName = class GPUFeatureName
         if ( !device.features.has( "texture-compression-astc" ) )
         {
             delete this.texture_compression_astc;
+        }
+        if ( !device.features.has( "texture-compression-astc-sliced-3d" ) )
+        {
+            delete this.texture_compression_astc_sliced_3d;
         }
         if ( !device.features.has( "timestamp-query" ) )
         {
@@ -72,6 +90,18 @@ easygpu.webgpu.GPUFeatureName = class GPUFeatureName
         if ( !device.features.has( "float32-filterable" ) )
         {
             delete this.float32_filterable;
+        }
+        if ( !device.features.has( "float32-blendable" ) )
+        {
+            delete this.float32_blendable;
+        }
+        if ( !device.features.has( "clip-distances" ) )
+        {
+            delete this.clip_distances;
+        }
+        if ( !device.features.has( "dual-source-blending" ) )
+        {
+            delete this.dual_source_blending;
         }
         Object.freeze( this );
     }
