@@ -201,6 +201,15 @@ easygpu.VertexListArray = class VertexListArray extends Array
             var vertexBufferLayout = new easygpu.webgpu.GPUVertexBufferLayout( arrayStride, stepMode );
             var autoArrayStride = 0;
             var vertexFormats = new easygpu.webgpu.GPUVertexFormat();
+            class VertexData
+            {
+                constructor ( name, wgslType, vertexAttribute )
+                {
+                    this.name = name;
+                    this.wgslType = wgslType;
+                    this.vertexAttribute = vertexAttribute;
+                }
+            }
             for ( var vertexParams of this )
             {
                 if ( Number.isInteger( vertexParams.offset ) )
@@ -210,11 +219,7 @@ easygpu.VertexListArray = class VertexListArray extends Array
                     var byteSize = vertexFormats.byteSizeOf( format );
                     var vertexAttribute = new easygpu.webgpu.GPUVertexAttribute( format, offset );
                     vertexBufferLayout.attributes.push( vertexAttribute );
-                    vertexList.push( {
-                        name            : vertexParams.name,
-                        wgslType        : vertexParams.wgslType,
-                        vertexAttribute : vertexAttribute
-                    } );
+                    vertexList.push( new VertexData( vertexParams.name, vertexParams.wgslType, vertexAttribute ) );
                     autoArrayStride = ( autoArrayStride > offset ? autoArrayStride : offset ) + byteSize;
                 }
             }
@@ -227,14 +232,7 @@ easygpu.VertexListArray = class VertexListArray extends Array
                     var byteSize = vertexFormats.byteSizeOf( format );
                     var vertexAttribute = new easygpu.webgpu.GPUVertexAttribute( format, offset );
                     vertexBufferLayout.attributes.push( vertexAttribute );
-                    vertexList.push( new class vertexData
-                    {
-                        name = vertexParams.name;
-
-                        wgslType = vertexParams.wgslType;
-
-                        vertexAttribute = vertexAttribute;
-                    }() );
+                    vertexList.push( new VertexData( vertexParams.name, vertexParams.wgslType, vertexAttribute ) );
                     autoArrayStride += byteSize;
                 }
             }
@@ -309,10 +307,10 @@ easygpu.PassResource = class PassResource
                 updated = true;
             }
 
-            setUpdated ( value )
+            /*setUpdated ( value )
             {
                 updated = value ? true : false;
-            }
+            }*/
 
             isUpdated ()
             {
@@ -514,9 +512,11 @@ easygpu.PassResource = class PassResource
                             {
                                 case value instanceof GPUSampler:
                                     entry.setResource( value );
+                                    updated = true;
                                     break;
                                 default:
                                     entry.setResource( device.createSampler( value ) );
+                                    updated = true;
                                     break;
                             }
                         },
@@ -537,9 +537,11 @@ easygpu.PassResource = class PassResource
                             {
                                 case value instanceof GPUTextureView:
                                     entry.setResource( value );
+                                    updated = true;
                                     break;
                                 case value instanceof GPUTexture:
                                     entry.setResource( value.createView() );
+                                    updated = true;
                                     break;
                             }
                         },
@@ -560,6 +562,7 @@ easygpu.PassResource = class PassResource
                             {
                                 case value instanceof GPUExternalTexture:
                                     entry.setResource( value );
+                                    updated = true;
                                     break;
                             }
                         },
@@ -585,7 +588,7 @@ easygpu.PassResource = class PassResource
         return bindGroupDescriptor;
     }
 
-    initBindGroup ( index, bindGroupDescriptor )
+    initBindGroupByDescriptor ( index, bindGroupDescriptor )
     {
         Object.defineProperty( this.bindGroups, index, {
             get : function ()
@@ -597,6 +600,13 @@ easygpu.PassResource = class PassResource
         } );
     }
 
+    initBindGroup ( index, bindingList, resources )
+    {
+        const bindGroupDescriptor = this.initBindGroupDescriptor( bindingList, resources );
+        this.bindGroupDescriptors[ index ] = bindGroupDescriptor;
+        this.initBindGroupByDescriptor( index, bindGroupDescriptor );
+    }
+
     initBindGroups ( bindingListArray = this.bindingListArray, resourcesArray = [] )
     {
         for ( const bindingList of bindingListArray )
@@ -604,9 +614,10 @@ easygpu.PassResource = class PassResource
             if ( bindingList )
             {
                 const index = bindingListArray.indexOf( bindingList );
-                const bindGroupDescriptor = this.initBindGroupDescriptor( bindingList, resourcesArray[ index ] );
-                this.bindGroupDescriptors[ index ] = bindGroupDescriptor;
-                this.initBindGroup( index, bindGroupDescriptor );
+                //const bindGroupDescriptor = this.initBindGroupDescriptor( bindingList, resourcesArray[ index ] );
+                //this.bindGroupDescriptors[ index ] = bindGroupDescriptor;
+                //this.initBindGroup( index, bindGroupDescriptor );
+                this.initBindGroup( index, bindingList, resourcesArray[ index ] );
             }
         }
     }
@@ -640,6 +651,7 @@ easygpu.RenderPassResource = class RenderPassResource extends easygpu.PassResour
         super( arg0, arg1 );
         if ( arg0 instanceof GPUDevice )
         {
+            this.vertexListArray;
             this.vertices = {};
             this.vertexBuffers = [];
         }
