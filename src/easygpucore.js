@@ -266,7 +266,7 @@ easygpu.ShaderModuleInputOutputList = class ShaderModuleInputOutputList extends 
         return inputOutputCodes.join();
     }
 };
-easygpu.PassResource = class PassResource
+easygpu.PassEncoderResource = class PassEncoderResource
 {
     constructor ( arg0, arg1 )
     {
@@ -286,7 +286,7 @@ easygpu.PassResource = class PassResource
                 configurable : true
             } );
         }
-        else if ( arg0 instanceof PassResource )
+        else if ( arg0 instanceof PassEncoderResource )
         {
             return arg0.copy( arg1 );
         }
@@ -340,9 +340,9 @@ easygpu.PassResource = class PassResource
                 return resources;
             }
 
-            initEntry ( passResource, bindingData, resources = {} )
+            initEntry ( passEncoderResource, bindingData, resources = {} )
             {
-                const device = passResource.device;
+                const device = passEncoderResource.device;
                 const binding = bindingData.entry.binding;
                 let resource;
                 if ( resources[ bindingData.name ] )
@@ -445,7 +445,7 @@ easygpu.PassResource = class PassResource
                                     break;
                             }
                         } )( bindingData.wgslType );
-                        Object.defineProperty( passResource.bindGroupResources, bindingData.name, {
+                        Object.defineProperty( passEncoderResource.bindGroupResources, bindingData.name, {
                             get : function ()
                             {
                                 return entry.resource.buffer;
@@ -501,7 +501,7 @@ easygpu.PassResource = class PassResource
                 }
                 else if ( bindingData.entry.sampler )
                 {
-                    Object.defineProperty( passResource.bindGroupResources, bindingData.name, {
+                    Object.defineProperty( passEncoderResource.bindGroupResources, bindingData.name, {
                         get : function ()
                         {
                             return entry.resource;
@@ -526,7 +526,7 @@ easygpu.PassResource = class PassResource
                 }
                 else if ( bindingData.entry.texture || bindingData.entry.storageTexture )
                 {
-                    Object.defineProperty( passResource.bindGroupResources, bindingData.name, {
+                    Object.defineProperty( passEncoderResource.bindGroupResources, bindingData.name, {
                         get : function ()
                         {
                             return entry.resource;
@@ -551,7 +551,7 @@ easygpu.PassResource = class PassResource
                 }
                 else if ( bindingData.entry.externalTexture )
                 {
-                    Object.defineProperty( passResource.bindGroupResources, bindingData.name, {
+                    Object.defineProperty( passEncoderResource.bindGroupResources, bindingData.name, {
                         get : function ()
                         {
                             return entry.resource;
@@ -573,13 +573,13 @@ easygpu.PassResource = class PassResource
                 updated = true;
             }
 
-            initEntries ( passResource, bindingList, resources )
+            initEntries ( passEncoderResource, bindingList, resources )
             {
                 for ( const bindingData of bindingList )
                 {
                     if ( bindingData )
                     {
-                        this.initEntry( passResource, bindingData, resources );
+                        this.initEntry( passEncoderResource, bindingData, resources );
                     }
                 }
             }
@@ -622,9 +622,9 @@ easygpu.PassResource = class PassResource
         }
     }
 
-    copyBindGroupResourcesPropertyFromPassResource ( passResource, name )
+    copyBindGroupResourcesPropertyFromPassEncoderResource ( passEncoderResource, name )
     {
-        Object.defineProperty( this.bindGroupResources, name, Object.getOwnPropertyDescriptor( passResource.bindGroupResources, name ) );
+        Object.defineProperty( this.bindGroupResources, name, Object.getOwnPropertyDescriptor( passEncoderResource.bindGroupResources, name ) );
     }
 
     copy ( override )
@@ -637,14 +637,14 @@ easygpu.PassResource = class PassResource
         return Object.defineProperties( new this.constructor(), Object.assign( Object.getOwnPropertyDescriptors( this ), overridePropertyDescriptors ) );
     }
 };
-easygpu.ComputePassResource = class ComputePassResource extends easygpu.PassResource
+easygpu.ComputePassEncoderResource = class ComputePassEncoderResource extends easygpu.PassEncoderResource
 {
     constructor ( arg0, arg1 )
     {
         super( arg0, arg1 );
     }
 };
-easygpu.RenderPassResource = class RenderPassResource extends easygpu.PassResource
+easygpu.RenderPassEncoderResource = class RenderPassEncoderResource extends easygpu.PassEncoderResource
 {
     constructor ( arg0, arg1 )
     {
